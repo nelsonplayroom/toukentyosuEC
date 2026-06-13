@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>東研 仲卸店 ｜ 豊洲市場</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;500;700&family=Noto+Sans+JP:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold: #C9A84C;
+      --gold-light: #E8C96A;
+      --gold-dark: #8B6914;
+      --black: #0A0A0A;
+      --black-mid: #141414;
+      --black-card: #1A1A1A;
+      --black-hover: #222;
+      --white: #F5F0E8;
+      --white-dim: #B8A98A;
+      --border-gold: 1px solid rgba(201,168,76,0.35);
+      --border-gold-bright: 1px solid rgba(201,168,76,0.7);
+      --font-serif: 'Noto Serif JP', serif;
+      --font-sans: 'Noto Sans JP', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: var(--font-sans);
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(
+        180deg,
+        transparent 0px,
+        transparent 18px,
+        rgba(201,168,76,0.04) 18px,
+        rgba(201,168,76,0.04) 19px
+      );
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ===== HEADER ===== */
+    header {
+      background: var(--black);
+      border-bottom: var(--border-gold-bright);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .header-inner {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 24px;
+    }
+
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .logo-seal {
+      width: 56px;
+      height: 56px;
+      border: 2px solid var(--gold);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at 50% 50%, rgba(201,168,76,0.08) 0%, transparent 70%);
+      flex-shrink: 0;
+    }
+
+    .logo-seal svg { width: 36px; height: 36px; }
+
+    .logo-text { font-family: var(--font-serif); }
+    .logo-name  { font-size: 28px; font-weight: 700; color: var(--gold); letter-spacing: 0.18em; line-height: 1; }
+    .logo-sub   { font-size: 10px; color: var(--white-dim); letter-spacing: 0.2em; margin-top: 4px; }
+
+    nav { display: flex; gap: 20px; align-items: center; }
+    nav a {
+      font-size: 12px;
+      color: var(--white-dim);
+      text-decoration: none;
+      letter-spacing: 0.12em;
+      padding: 6px 0;
+      border-bottom: 1px solid transparent;
+      cursor: pointer;
+      transition: color 0.2s, border-color 0.2s;
+      white-space: nowrap;
+    }
+    nav a:hover { color: var(--gold); border-bottom-color: var(--gold); }
+
+    .header-stripe {
+      height: 3px;
+      background: linear-gradient(90deg, transparent 0%, var(--gold-dark) 20%, var(--gold) 50%, var(--gold-dark) 80%, transparent 100%);
+    }
+
+    /* ===== ACCORDION ===== */
+    .store-wrapper {
+      background: var(--black-mid);
+      border-bottom: var(--border-gold);
+    }
+
+    .store-inner {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .accordion-btn {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 24px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: var(--font-serif);
+      font-size: 14px;
+      color: var(--gold);
+      letter-spacing: 0.12em;
+      transition: background 0.2s;
+      text-align: left;
+    }
+    .accordion-btn:hover { background: rgba(201,168,76,0.05); }
+
+    .acc-arrow {
+      font-size: 10px;
+      color: var(--gold);
+      transition: transform 0.3s;
+      flex-shrink: 0;
+    }
+    .acc-arrow.open { transform: rotate(180deg); }
+
+    .accordion-body {
+      display: none;
+      padding: 0 24px 20px;
+      border-top: var(--border-gold);
+      animation: fadeIn 0.2s ease;
+    }
+    .accordion-body.open { display: block; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-4px); }
+      to   { opacity: 1; transform: none; }
+    }
+
+    .store-tagline {
+      margin-top: 16px;
+      padding: 12px 16px;
+      border: var(--border-gold);
+      background: rgba(201,168,76,0.04);
+      font-family: var(--font-serif);
+      font-size: 13px;
+      color: var(--white-dim);
+      line-height: 1.9;
+      letter-spacing: 0.06em;
+    }
+
+    .store-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-top: 18px;
+    }
+
+    @media (max-width: 640px) {
+      .store-grid { grid-template-columns: 1fr; }
+    }
+
+    .store-label {
+      font-size: 11px;
+      color: var(--gold);
+      letter-spacing: 0.15em;
+      border-left: 2px solid var(--gold);
+      padding-left: 8px;
+      margin-bottom: 7px;
+    }
+    .store-value {
+      font-size: 13px;
+      color: var(--white);
+      line-height: 1.8;
+    }
+
+    /* ===== MAIN ===== */
+    main {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 0 24px 60px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ===== SECTION HEAD ===== */
+    .section-head {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin: 36px 0 14px;
+    }
+
+    .section-btn {
+      font-family: var(--font-serif);
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--gold);
+      letter-spacing: 0.15em;
+      background: none;
+      border: var(--border-gold-bright);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 18px;
+      transition: background 0.2s, color 0.2s;
+      white-space: nowrap;
+    }
+    .section-btn:hover {
+      background: rgba(201,168,76,0.1);
+      color: var(--gold-light);
+    }
+    .section-btn .arr { font-size: 11px; color: var(--gold-dark); }
+
+    .section-divider {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(201,168,76,0.5) 0%, transparent 100%);
+    }
+
+    .section-sub {
+      font-size: 11px;
+      color: var(--white-dim);
+      letter-spacing: 0.1em;
+      white-space: nowrap;
+    }
+
+    /* ===== SCROLL STRIP ===== */
+    .scroll-strip { overflow: hidden; }
+
+    .scroll-track {
+      display: flex;
+      gap: 14px;
+      animation: scrollLeft 22s linear infinite;
+      width: max-content;
+    }
+    .scroll-track:hover { animation-play-state: paused; }
+
+    @keyframes scrollLeft {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* ===== PRODUCT CARD ===== */
+    .product-card {
+      width: 160px;
+      flex-shrink: 0;
+      background: var(--black-card);
+      border: var(--border-gold);
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+    .product-card:hover {
+      border-color: var(--gold);
+      background: var(--black-hover);
+    }
+
+    .product-img {
+      width: 100%;
+      height: 110px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 44px;
+      background: rgba(201,168,76,0.06);
+      border-bottom: var(--border-gold);
+    }
+
+    .product-info { padding: 10px; }
+    .product-name { font-family: var(--font-serif); font-size: 13px; color: var(--white); margin-bottom: 4px; }
+    .product-origin { font-size: 10px; color: var(--white-dim); margin-bottom: 6px; }
+    .product-price { font-size: 14px; color: var(--gold); font-weight: 500; }
+    .product-unit  { font-size: 10px; color: var(--white-dim); }
+
+    .badge {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      font-size: 9px;
+      padding: 2px 7px;
+      background: var(--gold);
+      color: var(--black);
+      letter-spacing: 0.1em;
+      font-weight: 500;
+    }
+
+    /* ===== FISH TICKER ===== */
+    .fish-strip {
+      border-top: var(--border-gold);
+      border-bottom: var(--border-gold);
+      padding: 6px 0;
+      overflow: hidden;
+      margin: 32px 0;
+      background: rgba(201,168,76,0.03);
+    }
+    .fish-ticker {
+      display: flex;
+      gap: 40px;
+      animation: scrollLeft 14s linear infinite;
+      width: max-content;
+    }
+    .fish-item {
+      font-size: 11px;
+      color: var(--gold-dark);
+      letter-spacing: 0.15em;
+      white-space: nowrap;
+    }
+
+    /* ===== OVERLAY / SHOP PAGE ===== */
+    .overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.88);
+      z-index: 200;
+      align-items: center;
+      justify-content: center;
+    }
+    .overlay.active { display: flex; }
+
+    .shop-panel {
+      background: var(--black-card);
+      border: var(--border-gold-bright);
+      width: 92%;
+      max-width: 660px;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 28px;
+    }
+    .shop-panel::-webkit-scrollbar { width: 4px; }
+    .shop-panel::-webkit-scrollbar-thumb { background: var(--gold-dark); }
+
+    .shop-panel-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 14px;
+      border-bottom: var(--border-gold);
+    }
+    .shop-panel-title {
+      font-family: var(--font-serif);
+      font-size: 18px;
+      color: var(--gold);
+      letter-spacing: 0.18em;
+    }
+    .close-btn {
+      background: none;
+      border: var(--border-gold);
+      color: var(--gold);
+      width: 34px;
+      height: 34px;
+      cursor: pointer;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+    }
+    .close-btn:hover { background: rgba(201,168,76,0.1); }
+
+    .shop-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(201,168,76,0.15);
+    }
+    .shop-emoji { font-size: 30px; width: 48px; text-align: center; flex-shrink: 0; }
+    .shop-info  { flex: 1; min-width: 0; }
+    .shop-iname { font-family: var(--font-serif); font-size: 14px; color: var(--white); margin-bottom: 3px; }
+    .shop-desc  { font-size: 11px; color: var(--white-dim); }
+    .shop-price { font-size: 15px; color: var(--gold); font-weight: 500; white-space: nowrap; }
+    .shop-unit  { font-size: 10px; color: var(--white-dim); }
+    .order-btn  {
+      background: var(--gold-dark);
+      border: none;
+      color: var(--white);
+      padding: 7px 14px;
+      font-size: 12px;
+      cursor: pointer;
+      letter-spacing: 0.1em;
+      font-family: var(--font-sans);
+      white-space: nowrap;
+      transition: background 0.2s, color 0.2s;
+    }
+    .order-btn:hover { background: var(--gold); color: var(--black); }
+
+    /* ===== COLUMN SECTION ===== */
+    .col-section { margin-top: 44px; }
+
+    .col-section-title {
+      font-family: var(--font-serif);
+      font-size: 14px;
+      color: var(--gold);
+      letter-spacing: 0.2em;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .col-section-title::before,
+    .col-section-title::after {
+      content: '';
+      height: 1px;
+      flex: 1;
+      background: rgba(201,168,76,0.4);
+    }
+
+    .col-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    @media (max-width: 640px) {
+      .col-grid { grid-template-columns: 1fr; }
+    }
+
+    .col-box {
+      background: var(--black-card);
+      border: var(--border-gold);
+      height: 280px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .col-header {
+      padding: 10px 14px;
+      background: rgba(201,168,76,0.08);
+      border-bottom: var(--border-gold);
+      font-family: var(--font-serif);
+      font-size: 13px;
+      color: var(--gold);
+      letter-spacing: 0.12em;
+      flex-shrink: 0;
+    }
+
+    .col-scroll {
+      overflow-y: auto;
+      flex: 1;
+    }
+    .col-scroll::-webkit-scrollbar { width: 4px; }
+    .col-scroll::-webkit-scrollbar-track { background: transparent; }
+    .col-scroll::-webkit-scrollbar-thumb { background: var(--gold-dark); }
+
+    .col-entry {
+      padding: 10px 14px;
+      border-bottom: 1px solid rgba(201,168,76,0.1);
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .col-entry:hover { background: rgba(201,168,76,0.05); }
+    .col-date { font-size: 10px; color: var(--gold-dark); margin-bottom: 3px; letter-spacing: 0.05em; }
+    .col-tag  {
+      display: inline-block;
+      font-size: 9px;
+      padding: 1px 6px;
+      background: rgba(201,168,76,0.15);
+      color: var(--gold);
+      margin-bottom: 4px;
+      letter-spacing: 0.08em;
+    }
+    .col-title { font-size: 13px; color: var(--white); line-height: 1.5; }
+    .col-body  { font-size: 11px; color: var(--white-dim); margin-top: 4px; line-height: 1.6; }
+
+    /* ===== FOOTER ===== */
+    footer {
+      border-top: var(--border-gold-bright);
+      background: var(--black);
+      padding: 28px 24px;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+    .footer-inner { max-width: 1000px; margin: 0 auto; }
+    .footer-kamon { font-size: 22px; margin-bottom: 8px; color: var(--gold-dark); }
+    .footer-name  { font-family: var(--font-serif); font-size: 17px; color: var(--gold); letter-spacing: 0.35em; margin-bottom: 10px; }
+    .footer-info  { font-size: 11px; color: var(--white-dim); letter-spacing: 0.1em; line-height: 2.2; }
+  </style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header>
+  <div class="header-inner">
+    <div class="logo-area">
+      <div class="logo-seal">
+        <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle cx="18" cy="18" r="16" stroke="#C9A84C" stroke-width="1"/>
+          <path d="M6 20 Q10 14 18 17 Q26 20 30 16" stroke="#C9A84C" stroke-width="1.2" fill="none"/>
+          <ellipse cx="18" cy="18" rx="8" ry="5" stroke="#C9A84C" stroke-width="0.8" fill="rgba(201,168,76,0.1)"/>
+          <circle cx="11" cy="17" r="1" fill="#C9A84C"/>
+        </svg>
+      </div>
+      <div class="logo-text">
+        <div class="logo-name">東　研</div>
+        <div class="logo-sub">TŌKEN FISHMONGER · TOYOSU MARKET</div>
+      </div>
+    </div>
+    <nav>
+      <a onclick="openShop('season')">旬の魚</a>
+      <a onclick="openShop('daily')">本日の一押し</a>
+      <a onclick="openShop('sale')">特価商品</a>
+      <a href="#column-section">ご案内</a>
+      <a href="#footer">お問合せ</a>
+    </nav>
+  </div>
+  <div class="header-stripe"></div>
+</header>
+
+<!-- ===== ACCORDION ===== -->
+<div class="store-wrapper">
+  <div class="store-inner">
+    <button class="accordion-btn" onclick="toggleAccordion()" aria-expanded="false" aria-controls="acc-body">
+      <span>▲ 東研について ― 豊洲市場　仲卸　東研</span>
+      <span class="acc-arrow" id="acc-arrow">▼</span>
+    </button>
+    <div class="accordion-body" id="acc-body" role="region">
+      <div class="store-tagline">
+        豊洲市場に構える仲卸「東研」。目利きの技と産地直送の鮮度で、<br>
+        プロの料理人から食通の家庭まで、一尾一尾に誠実に向き合います。
+      </div>
+      <div class="store-grid">
+        <div>
+          <div class="store-label">所在地</div>
+          <div class="store-value">東京都江東区豊洲6丁目<br>豊洲市場　水産仲卸売場棟<br>東研ブース</div>
+        </div>
+        <div>
+          <div class="store-label">営業時間</div>
+          <div class="store-value">月〜土　05:00 – 13:00<br>日・祝　休業<br>年末年始・市場休業日に準ずる</div>
+        </div>
+        <div>
+          <div class="store-label">取扱品目</div>
+          <div class="store-value">生鮮魚介類全般<br>活魚・活貝・珍魚<br>加工品・乾物</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== MAIN ===== -->
+<main>
+
+  <!-- SECTION: 旬の魚 -->
+  <div class="section-head">
+    <button class="section-btn" onclick="openShop('season')">
+      🐟 旬　の　魚 <span class="arr">→</span>
+    </button>
+    <div class="section-divider"></div>
+    <span class="section-sub">季節の恵み</span>
+  </div>
+  <div class="scroll-strip" aria-label="旬の魚 商品一覧">
+    <div class="scroll-track" id="season-track"></div>
+  </div>
+
+  <!-- SECTION: 本日の一押し -->
+  <div class="section-head">
+    <button class="section-btn" onclick="openShop('daily')">
+      ⭐ 本日の一押し <span class="arr">→</span>
+    </button>
+    <div class="section-divider"></div>
+    <span class="section-sub">目利きの逸品</span>
+  </div>
+  <div class="scroll-strip" aria-label="本日の一押し 商品一覧">
+    <div class="scroll-track" id="daily-track"></div>
+  </div>
+
+  <!-- SECTION: 特価商品 -->
+  <div class="section-head">
+    <button class="section-btn" onclick="openShop('sale')">
+      🏷 特　価　商　品 <span class="arr">→</span>
+    </button>
+    <div class="section-divider"></div>
+    <span class="section-sub">お得なお買い物</span>
+  </div>
+  <div class="scroll-strip" aria-label="特価商品 一覧">
+    <div class="scroll-track" id="sale-track"></div>
+  </div>
+
+  <!-- FISH TICKER -->
+  <div class="fish-strip" aria-hidden="true">
+    <div class="fish-ticker" id="fish-ticker"></div>
+  </div>
+
+  <!-- COLUMN SECTION -->
+  <section class="col-section" id="column-section">
+    <div class="col-section-title">ご案内　コーナー</div>
+    <div class="col-grid">
+      <div class="col-box">
+        <div class="col-header">🐠 はじめてのお客様へ</div>
+        <div class="col-scroll" id="newbie-col" role="feed" aria-label="初めての方向けご案内"></div>
+      </div>
+      <div class="col-box">
+        <div class="col-header">🎏 常連様向けご案内</div>
+        <div class="col-scroll" id="regular-col" role="feed" aria-label="常連様向けご案内"></div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ===== SHOP OVERLAY ===== -->
+<div class="overlay" id="shop-overlay" role="dialog" aria-modal="true" aria-labelledby="shop-title"
+     onclick="overlayClose(event)">
+  <div class="shop-panel">
+    <div class="shop-panel-head">
+      <div class="shop-panel-title" id="shop-title">旬の魚　一覧</div>
+      <button class="close-btn" onclick="closeShop()" aria-label="閉じる">✕</button>
+    </div>
+    <div id="shop-items"></div>
+  </div>
+</div>
+
+<!-- ===== FOOTER ===== -->
+<footer id="footer">
+  <div class="footer-inner">
+    <div class="footer-kamon">〜</div>
+    <div class="footer-name">東　研　仲卸店</div>
+    <div class="footer-info">
+      〒135-0061　東京都江東区豊洲6丁目　豊洲市場 水産仲卸売場棟<br>
+      TEL: 03-XXXX-XXXX　｜　営業時間: 月〜土 05:00〜13:00<br>
+      © 東研 TŌKEN FISHMONGER All rights reserved.
+    </div>
+  </div>
+</footer>
+
+<script>
+  /* ===== DATA ===== */
+  const products = {
+    season: [
+      { name: '真鯵',       emoji: '🐟', origin: '長崎県対馬産',   price: '¥1,200', unit: '/kg',   badge: '旬' },
+      { name: '鰹',         emoji: '🐠', origin: '高知県土佐沖',   price: '¥2,400', unit: '/本',   badge: '初鰹' },
+      { name: '鱸',         emoji: '🐡', origin: '瀬戸内海',       price: '¥1,800', unit: '/尾',   badge: null },
+      { name: '岩牡蠣',     emoji: '🦪', origin: '島根県隠岐産',   price: '¥680',   unit: '/個',   badge: '旬' },
+      { name: '鱚',         emoji: '🐟', origin: '東京湾',         price: '¥900',   unit: '/kg',   badge: null },
+      { name: '太刀魚',     emoji: '🐠', origin: '富山湾',         price: '¥1,600', unit: '/本',   badge: '旬' },
+      { name: '縞鯵',       emoji: '🐡', origin: '高知県',         price: '¥2,200', unit: '/尾',   badge: null },
+      { name: '真蛸',       emoji: '🐙', origin: '明石産',         price: '¥3,200', unit: '/kg',   badge: '特選' },
+    ],
+    daily: [
+      { name: '本マグロ（大トロ）', emoji: '🍣', origin: '大西洋産',       price: '¥8,500', unit: '/100g', badge: '今日' },
+      { name: '天然平目',           emoji: '🐟', origin: '青森県陸奥湾',   price: '¥4,200', unit: '/尾',   badge: null },
+      { name: '生しらす',           emoji: '🐠', origin: '相模湾',         price: '¥1,200', unit: '/100g', badge: '朝獲れ' },
+      { name: '金目鯛',             emoji: '🐡', origin: '稲取産',         price: '¥3,600', unit: '/尾',   badge: '特選' },
+      { name: '帆立貝柱（生）',     emoji: '🐚', origin: '北海道猿払',     price: '¥2,800', unit: '/kg',   badge: null },
+      { name: '天然鰤',             emoji: '🐟', origin: '富山県氷見',     price: '¥2,200', unit: '/kg',   badge: '今日' },
+      { name: '桜海老（生）',       emoji: '🦐', origin: '駿河湾',         price: '¥1,600', unit: '/100g', badge: null },
+      { name: '子持ち鮎',           emoji: '🐠', origin: '那珂川',         price: '¥400',   unit: '/尾',   badge: '旬' },
+    ],
+    sale: [
+      { name: '真鯛（訳あり）', emoji: '🐟', origin: '伊勢志摩',     price: '¥680',   unit: '/尾',   badge: 'SALE' },
+      { name: 'ムール貝',       emoji: '🐚', origin: '青森産',       price: '¥450',   unit: '/kg',   badge: 'SALE' },
+      { name: '甘エビ（頭付き）', emoji: '🦐', origin: '北海道',    price: '¥980',   unit: '/500g', badge: '特価' },
+      { name: 'スルメイカ',     emoji: '🦑', origin: '石川県',       price: '¥360',   unit: '/杯',   badge: null },
+      { name: '真鰯（大）',     emoji: '🐟', origin: '千葉県銚子',   price: '¥280',   unit: '/尾',   badge: '特価' },
+      { name: '骨取りサバ',     emoji: '🐠', origin: '長崎産',       price: '¥750',   unit: '/切',   badge: null },
+      { name: 'ズワイガニ片脚', emoji: '🦀', origin: '鳥取境港',     price: '¥1,200', unit: '/本',   badge: 'SALE' },
+      { name: '干し数の子',     emoji: '🟡', origin: 'カナダ産',     price: '¥900',   unit: '/100g', badge: null },
+    ],
+  };
+
+  const shopTitles = {
+    season: '旬の魚　一覧',
+    daily:  '本日の一押し　一覧',
+    sale:   '特価商品　一覧',
+  };
+
+  /* ===== BUILD PRODUCT CARDS ===== */
+  function buildCards(trackId, items) {
+    const track = document.getElementById(trackId);
+    const doubled = [...items, ...items];
+    doubled.forEach(p => {
+      const card = document.createElement('div');
+      card.className = 'product-card';
+      card.setAttribute('role', 'article');
+      card.innerHTML =
+        (p.badge ? `<div class="badge">${p.badge}</div>` : '') +
+        `<div class="product-img" aria-hidden="true">${p.emoji}</div>
+         <div class="product-info">
+           <div class="product-name">${p.name}</div>
+           <div class="product-origin">${p.origin}</div>
+           <div class="product-price">${p.price}<span class="product-unit"> ${p.unit}</span></div>
+         </div>`;
+      track.appendChild(card);
+    });
+  }
+
+  buildCards('season-track', products.season);
+  buildCards('daily-track',  products.daily);
+  buildCards('sale-track',   products.sale);
+
+  /* ===== FISH TICKER ===== */
+  const fishNames = ['鮪','鯵','鰹','鱸','平目','鰤','鯛','蛸','海老','蟹','牡蠣','帆立','鰻','鮎','鯖','鰯','太刀魚','金目鯛','縞鯵','鰈','穴子','鱧'];
+  const ticker = document.getElementById('fish-ticker');
+  [...fishNames, ...fishNames, ...fishNames].forEach(f => {
+    const span = document.createElement('span');
+    span.className = 'fish-item';
+    span.textContent = `〜 ${f} 〜`;
+    ticker.appendChild(span);
+  });
+
+  /* ===== SHOP OVERLAY ===== */
+  function openShop(type) {
+    document.getElementById('shop-title').textContent = shopTitles[type];
+    const container = document.getElementById('shop-items');
+    container.innerHTML = '';
+    products[type].forEach(p => {
+      const row = document.createElement('div');
+      row.className = 'shop-row';
+      row.innerHTML =
+        `<div class="shop-emoji" aria-hidden="true">${p.emoji}</div>
+         <div class="shop-info">
+           <div class="shop-iname">${p.name}</div>
+           <div class="shop-desc">${p.origin}${p.badge ? '　[' + p.badge + ']' : ''}</div>
+         </div>
+         <div class="shop-price">${p.price}<span class="shop-unit"> ${p.unit}</span></div>
+         <button class="order-btn">注文する</button>`;
+      container.appendChild(row);
+    });
+    const overlay = document.getElementById('shop-overlay');
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeShop() {
+    document.getElementById('shop-overlay').classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  function overlayClose(e) {
+    if (e.target === document.getElementById('shop-overlay')) closeShop();
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeShop();
+  });
+
+  /* ===== ACCORDION ===== */
+  function toggleAccordion() {
+    const body  = document.getElementById('acc-body');
+    const arrow = document.getElementById('acc-arrow');
+    const btn   = document.querySelector('.accordion-btn');
+    const open  = body.classList.toggle('open');
+    arrow.classList.toggle('open', open);
+    btn.setAttribute('aria-expanded', String(open));
+  }
+
+  /* ===== COLUMN DATA ===== */
+  const newbieEntries = [
+    { date: '2025.06', tag: 'ご利用案内', title: '東研ECサイトのご利用方法',     body: 'ご注文はカートに商品を追加の上、お支払い方法をご選択ください。' },
+    { date: '2025.05', tag: '配送',       title: '産地直送・翌朝お届けサービス開始', body: '新鮮なまま最短翌朝にお届けします。ご注文は前日15時まで。' },
+    { date: '2025.04', tag: '新規登録',   title: '会員登録で初回10%OFF',        body: '新規ご登録のお客様に初回購入10%割引クーポンをご用意しています。' },
+    { date: '2025.03', tag: 'FAQ',        title: '魚の下処理・捌きサービスについて', body: '三枚おろし・切り身など、ご要望に応じた下処理を承ります（有料）。' },
+    { date: '2025.02', tag: '支払い',     title: 'クレジットカード・銀行振込に対応', body: 'Visa / Master / JCB、各種電子マネーでのお支払いが可能です。' },
+    { date: '2025.01', tag: '選び方',     title: '旬の魚カレンダーを公開しました',  body: '季節ごとに最も美味しい魚介をご案内するカレンダーです。' },
+  ];
+
+  const regularEntries = [
+    { date: '2025.06', tag: '会員特典',   title: '常連様限定　先行予約販売のご案内', body: '今季の天然岩牡蠣・活ホタテの先行予約を受け付けております。' },
+    { date: '2025.06', tag: 'セール',     title: '6月ポイント2倍キャンペーン',     body: '6月中のお買い物は全品ポイント2倍となります。ぜひご利用ください。' },
+    { date: '2025.05', tag: 'プレミアム', title: '本マグロ大トロ　定期便プランのご案内', body: '毎月厳選した本マグロをお届けするサブスクプランを開始しました。' },
+    { date: '2025.04', tag: '入荷情報',   title: '春の特選入荷：桜海老・子持ちアユ',  body: '旬の希少品が入荷しました。常連様には個別にご連絡いたします。' },
+    { date: '2025.03', tag: '感謝祭',     title: '年間購入感謝プレゼント抽選結果',    body: '昨年の感謝祭当選者の方へ特選品セットを発送いたしました。' },
+    { date: '2025.02', tag: 'イベント',   title: '豊洲見学ツアー　常連様特別招待',     body: '市場内の目利き体験ツアーを開催。参加希望の方はお問合せください。' },
+    { date: '2025.01', tag: 'お知らせ',   title: '年始営業日・配送スケジュールのご案内', body: '年始は1月5日より通常営業を再開しております。' },
+  ];
+
+  function buildColumn(id, entries) {
+    const col = document.getElementById(id);
+    entries.forEach(e => {
+      const div = document.createElement('div');
+      div.className = 'col-entry';
+      div.innerHTML =
+        `<div class="col-date">${e.date}</div>
+         <span class="col-tag">${e.tag}</span>
+         <div class="col-title">${e.title}</div>
+         <div class="col-body">${e.body}</div>`;
+      col.appendChild(div);
+    });
+  }
+
+  buildColumn('newbie-col',  newbieEntries);
+  buildColumn('regular-col', regularEntries);
+</script>
+</body>
+</html>
