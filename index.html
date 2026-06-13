@@ -41,13 +41,10 @@
       content: '';
       position: fixed;
       inset: 0;
-      background: repeating-linear-gradient(
-        180deg,
-        transparent 0px,
-        transparent 18px,
-        rgba(201,168,76,0.04) 18px,
-        rgba(201,168,76,0.04) 19px
-      );
+      background-image: url('東研ロゴ２.jpg');
+      background-size: 320px 320px;
+      background-repeat: repeat;
+      opacity: 0.18;
       pointer-events: none;
       z-index: 0;
     }
@@ -77,18 +74,15 @@
     }
 
     .logo-seal {
-      width: 56px;
-      height: 56px;
-      border: 2px solid var(--gold);
+      width: 60px;
+      height: 60px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      background: radial-gradient(circle at 50% 50%, rgba(201,168,76,0.08) 0%, transparent 70%);
       flex-shrink: 0;
+      overflow: hidden;
     }
-
-    .logo-seal svg { width: 36px; height: 36px; }
 
     .logo-text { font-family: var(--font-serif); }
     .logo-name  { font-size: 28px; font-weight: 700; color: var(--gold); letter-spacing: 0.18em; line-height: 1; }
@@ -514,12 +508,7 @@
   <div class="header-inner">
     <div class="logo-area">
       <div class="logo-seal">
-        <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <circle cx="18" cy="18" r="16" stroke="#C9A84C" stroke-width="1"/>
-          <path d="M6 20 Q10 14 18 17 Q26 20 30 16" stroke="#C9A84C" stroke-width="1.2" fill="none"/>
-          <ellipse cx="18" cy="18" rx="8" ry="5" stroke="#C9A84C" stroke-width="0.8" fill="rgba(201,168,76,0.1)"/>
-          <circle cx="11" cy="17" r="1" fill="#C9A84C"/>
-        </svg>
+        <img src="東研ロゴ.jpg" alt="東研 家紋ロゴ" style="width:52px;height:52px;border-radius:50%;object-fit:contain;display:block;">
       </div>
       <div class="logo-text">
         <div class="logo-name">東　研</div>
